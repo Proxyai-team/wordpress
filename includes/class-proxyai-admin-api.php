@@ -77,6 +77,28 @@ final class ProxyAI_Admin_Api {
 			)
 		);
 
+		// The content-sync switch. Local like the widget switch: the option
+		// lives on this site and gates the save/delete listeners.
+		register_rest_route(
+			self::REST_NAMESPACE,
+			'/sync',
+			array(
+				array(
+					'methods'             => 'GET',
+					'callback'            => static fn(): array => array( 'enabled' => ProxyAI_Content_Sync::sync_enabled() ),
+					'permission_callback' => array( ProxyAI_Connection::class, 'can_manage' ),
+				),
+				array(
+					'methods'             => 'POST',
+					'callback'            => static function ( WP_REST_Request $request ): array {
+						ProxyAI_Content_Sync::set_sync_enabled( true === $request['enabled'] || '1' === $request['enabled'] );
+						return array( 'enabled' => ProxyAI_Content_Sync::sync_enabled() );
+					},
+					'permission_callback' => array( ProxyAI_Connection::class, 'can_manage' ),
+				),
+			)
+		);
+
 		// The knowledge implant chain, run server-side because wp-admin's
 		// origin cannot be named by the bucket's CORS policy. Every URL this
 		// PUTs to came out of an authenticated ProxyAI response — nothing

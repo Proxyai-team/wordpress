@@ -87,5 +87,6 @@ function proxyai_uninstall(): void {
 	delete_option( ProxyAI_Connection::OPTION_ENABLED );
 	delete_option( ProxyAI_Content_Sync::OPTION_KNOWLEDGE );
 	delete_option( ProxyAI_Content_Sync::OPTION_QUEUE );
+	delete_option( ProxyAI_Content_Sync::OPTION_SYNC_ENABLED );
 }
 register_uninstall_hook( __FILE__, 'proxyai_uninstall' );

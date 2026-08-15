@@ -22,6 +22,8 @@ final class ProxyAI_Content_Sync {
 
 	public const OPTION_KNOWLEDGE = 'proxyai_has_knowledge';
 	public const OPTION_QUEUE     = 'proxyai_sync_queue';
+	/** The merchant's switch; on by default. */
+	public const OPTION_SYNC_ENABLED = 'proxyai_sync_enabled';
 
 	private const EVENT_FLUSH = 'proxyai_sync_flush';
 	private const EVENT_CRAWL = 'proxyai_sync_crawl';
@@ -42,7 +44,7 @@ final class ProxyAI_Content_Sync {
 		add_action( self::EVENT_FLUSH, array( self::class, 'flush' ) );
 		add_action( self::EVENT_CRAWL, array( self::class, 'crawl_batch' ), 10, 1 );
 
-		if ( ! ProxyAI_Connection::is_connected() || ! self::has_knowledge() ) {
+		if ( ! ProxyAI_Connection::is_connected() || ! self::has_knowledge() || ! self::sync_enabled() ) {
 			return;
 		}
 
@@ -60,6 +62,36 @@ final class ProxyAI_Content_Sync {
 	 */
 	public static function has_knowledge(): bool {
 		return get_option( self::OPTION_KNOWLEDGE, '0' ) === '1';
+	}
+
+	/**
+	 * Whether the merchant has automatic content sync switched on.
+	 *
+	 * @return bool Whether syncing is on.
+	 */
+	public static function sync_enabled(): bool {
+		return get_option( self::OPTION_SYNC_ENABLED, '1' ) === '1';
+	}
+
+	/**
+	 * Flips the merchant's switch. Turning it off drops the pending queue and
+	 * scheduled work; turning it back on walks the site again so nothing edited
+	 * in between is missed.
+	 *
+	 * @param bool $enabled Whether syncing should be on.
+	 */
+	public static function set_sync_enabled( bool $enabled ): void {
+		$was = self::sync_enabled();
+		update_option( self::OPTION_SYNC_ENABLED, $enabled ? '1' : '0', false );
+		if ( ! $enabled ) {
+			delete_option( self::OPTION_QUEUE );
+			wp_clear_scheduled_hook( self::EVENT_FLUSH );
+			wp_clear_scheduled_hook( self::EVENT_CRAWL );
+			return;
+		}
+		if ( ! $was && ProxyAI_Connection::is_connected() && self::has_knowledge() ) {
+			self::start_crawl();
+		}
 	}
 
 	/**
@@ -226,7 +258,7 @@ final class ProxyAI_Content_Sync {
 	 * @param int $offset How many posts to skip.
 	 */
 	public static function crawl_batch( $offset = 0 ): void {
-		if ( ! ProxyAI_Connection::is_connected() || ! self::has_knowledge() ) {
+		if ( ! ProxyAI_Connection::is_connected() || ! self::has_knowledge() || ! self::sync_enabled() ) {
 			return;
 		}
 		$offset = max( 0, (int) $offset );

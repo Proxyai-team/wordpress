@@ -100,7 +100,8 @@ plain-text content of your published posts, pages and products, so the
 assistant can answer from them. Drafts, private posts, password-protected posts
 and trashed posts are never sent. Without that add-on, no content is sent. You
 can filter or exclude individual documents with the `proxyai_sync_document`
-hook.
+hook, or switch automatic sync off entirely under Store actions in the
+ProxyAI screen.
 
 **On every front-end page view**, visitors' browsers load the chat widget from
 `https://www.proxyai.app/embed.js`, and on WooCommerce stores also
@@ -203,7 +204,9 @@ needs the Helpdesk add-on to be active.
 = Can I stop specific content being sent? =
 
 Yes. Filter `proxyai_sync_document` and return `null` to drop a document, or an
-edited array to redact it. `proxyai_enable_woo_cart` disables the cart bridge
+edited array to redact it. To stop automatic sync altogether, turn off **Sync
+content automatically** under Store actions in the ProxyAI screen — nothing
+more is sent until you turn it back on. `proxyai_enable_woo_cart` disables the cart bridge
 while leaving the assistant running.
 
 == Installation ==
@@ -234,6 +237,7 @@ while leaving the assistant running.
 * Dialogs centre over the admin content area instead of the full screen, numbered setup steps keep their numbers beside the text, and the ticket dialog's Category dropdown lines up with the fields beside it.
 * Support-ticket uploads travel through the site's own REST proxy like every other dashboard call.
 * Code housekeeping for the WordPress.org review: the whole plugin passes PHP_CodeSniffer's WordPress standard and Plugin Check clean.
+* A switch under Store actions turns automatic content sync off and on.
 * Readme documents every external service the plugin uses — Stripe and PayPal terms and privacy links, what is sent and when, uploads — and states that the plugin ships no compiled or minified code, with the source published at https://github.com/Proxyai-team/wordpress.
 
 = 1.0.1 =

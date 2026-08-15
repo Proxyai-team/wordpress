@@ -3404,7 +3404,44 @@
         ? el('p', { className: 'pa-unsaved' }, __('Unsaved changes — press Save to apply them.', 'proxyai'))
         : null,
       el(SaveButton, { state: saveState, onClick: saveActions }),
-      props.hasStoreActions ? el(StoreActionsPane, null) : null
+      props.hasStoreActions ? el(StoreActionsPane, null) : null,
+      owned.rag ? el(ContentSyncPane, null) : null
+    );
+  }
+
+  /**
+   * Content sync switch — a plugin-local option, so it reads and writes this
+   * site's own REST route rather than the proxy.
+   */
+  function ContentSyncPane() {
+    var s1 = useState(null); var enabled = s1[0]; var setEnabled = s1[1];
+
+    useEffect(function () {
+      apiFetch({ path: '/proxyai/v1/sync' }).then(function (res) {
+        setEnabled(!!res.enabled);
+      }, function () { setEnabled(false); });
+    }, []);
+
+    function save(next) {
+      var prev = enabled;
+      setEnabled(next);
+      apiFetch({ path: '/proxyai/v1/sync', method: 'POST', data: { enabled: next } })
+        .then(function (res) { setEnabled(!!res.enabled); }, function () { setEnabled(prev); });
+    }
+
+    return el(
+      Fragment,
+      null,
+      el('h3', { className: 'pa-pane__subhead' }, __('Content sync', 'proxyai')),
+      el('p', { className: 'pa-card__sub' },
+        __('Keeps the bot’s knowledge in step with this site: published posts, pages and products are sent as you publish, edit or delete them.', 'proxyai')),
+      el(ToggleRow, {
+        label: __('Sync content automatically', 'proxyai'),
+        description: __('Off: nothing more is sent, and pending work is dropped. What was already synced stays. Turning it back on walks the site again.', 'proxyai'),
+        checked: enabled === true,
+        disabled: enabled === null,
+        onChange: save,
+      })
     );
   }
 
@@ -3494,9 +3531,9 @@
     if (owned.handoff) subTabs.push({ key: 'handoff', label: __('Hand-off', 'proxyai') });
     if (owned.helpdesk) subTabs.push({ key: 'helpdesk', label: __('Helpdesk', 'proxyai') });
     subTabs.push({ key: 'channels', label: __('Channels', 'proxyai') });
-    // Shown for a real store, or when owning either add-on whose top-level
-    // switch lives here.
-    if (props.hasStoreActions || owned.helpdesk || owned.handoff) {
+    // Shown for a real store, or when owning an add-on whose top-level
+    // switch lives here (helpdesk, hand-off, content sync for Knowledge).
+    if (props.hasStoreActions || owned.helpdesk || owned.handoff || owned.rag) {
       subTabs.push({ key: 'extra', label: __('Store actions', 'proxyai') });
     }
 
