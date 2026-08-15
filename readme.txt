@@ -108,7 +108,11 @@ hook.
 load `ticket-embed.js` from the same host. Chat messages your visitors type go
 to ProxyAI to be answered. These scripts are served by the service itself and
 are not bundled, because the widget and the service it talks to are versioned
-together.
+together. `embed.js` and `woo-cart.js` are minified for visitors' page speed;
+their readable sources are served alongside them at
+`https://www.proxyai.app/embed.src.js` and
+`https://www.proxyai.app/woo-cart.src.js`. `ticket-embed.js` is served
+unminified.
 
 **When a logged-in user views a page with the assistant or the ticket form**,
 the plugin places a signed token on the page carrying that user's WordPress
