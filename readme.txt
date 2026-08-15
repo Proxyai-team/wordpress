@@ -138,6 +138,10 @@ widget, both described under External services.
 The long lines you will find in `dashboard.js` are SVG icon paths and
 translatable strings, not compressed code.
 
+The same files are published, unchanged, at
+https://github.com/Proxyai-team/wordpress — read, fork, or diff against the
+plugin zip there.
+
 == Frequently Asked Questions ==
 
 = Do I need an account before installing? =

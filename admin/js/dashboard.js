@@ -4,7 +4,8 @@
  * This file is the source. It is hand-written and not generated: there is no
  * build step, bundler or minifier — it runs as-is on WordPress's bundled
  * React (`wp.element`, createElement) and `wp.apiFetch`. Long lines below are
- * SVG icon paths and translatable strings.
+ * SVG icon paths and translatable strings. Published unchanged at
+ * https://github.com/Proxyai-team/wordpress.
  *
  * Every request goes to this site's own REST API
  * (`proxyai/v1/admin/*`), cookie-authenticated and nonce-checked; PHP
