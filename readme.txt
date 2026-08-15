@@ -5,7 +5,7 @@ Tags: chatbot, ai, customer support, woocommerce, live chat
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -229,6 +229,10 @@ while leaving the assistant running.
 
 == Changelog ==
 
+= 1.0.3 =
+* A switch under Store actions turns automatic content sync off and on.
+* Readme documents every external service the plugin uses — Stripe and PayPal terms and privacy links, what is sent and when, uploads — and states that the plugin ships no compiled or minified code, with the source published at https://github.com/Proxyai-team/wordpress.
+
 = 1.0.2 =
 * WhatsApp (unofficial bridge) now pairs in place: the QR code renders inside the channel dialog and refreshes itself until scanned — no trip to the hosted dashboard.
 * The Web channel dialog can upload a chat widget icon again, next to the allowed-domain field.
@@ -237,8 +241,6 @@ while leaving the assistant running.
 * Dialogs centre over the admin content area instead of the full screen, numbered setup steps keep their numbers beside the text, and the ticket dialog's Category dropdown lines up with the fields beside it.
 * Support-ticket uploads travel through the site's own REST proxy like every other dashboard call.
 * Code housekeeping for the WordPress.org review: the whole plugin passes PHP_CodeSniffer's WordPress standard and Plugin Check clean.
-* A switch under Store actions turns automatic content sync off and on.
-* Readme documents every external service the plugin uses — Stripe and PayPal terms and privacy links, what is sent and when, uploads — and states that the plugin ships no compiled or minified code, with the source published at https://github.com/Proxyai-team/wordpress.
 
 = 1.0.1 =
 * The dashboard is now fully native to wp-admin — setup, add-ons, agent inbox, ticket board, usage log, rates and settings all render locally on WordPress's own component library, with no embedded frame. Data flows through this site's REST API and is forwarded server-to-server; the browser holds no ProxyAI credential.

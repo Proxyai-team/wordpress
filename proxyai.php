@@ -3,7 +3,7 @@
  * Plugin Name:       ProxyAI
  * Plugin URI:        https://wordpress.org/plugins/proxyai/
  * Description:       AI chat assistant for your site and WooCommerce store. Answers questions from your own content, hands off to a human, and adds to the cart in the shopper's browser.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Requires at least: 6.2
  * Requires PHP:      8.1
  * Author:            ProxyAI
