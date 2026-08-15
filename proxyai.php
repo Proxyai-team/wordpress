@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const PROXYAI_VERSION = '1.0.2';
+const PROXYAI_VERSION = '1.0.3';
 
 /** Service origin. Overridable for development. */
 if ( ! defined( 'PROXYAI_APP_URL' ) ) {
