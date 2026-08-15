@@ -3417,9 +3417,11 @@
     var s1 = useState(null); var enabled = s1[0]; var setEnabled = s1[1];
 
     useEffect(function () {
+      // Stays null if the read fails: the toggle keeps disabled rather than
+      // showing an "off" the site never chose.
       apiFetch({ path: '/proxyai/v1/sync' }).then(function (res) {
         setEnabled(!!res.enabled);
-      }, function () { setEnabled(false); });
+      }, function () {});
     }, []);
 
     function save(next) {

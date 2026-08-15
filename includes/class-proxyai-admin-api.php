@@ -91,10 +91,20 @@ final class ProxyAI_Admin_Api {
 				array(
 					'methods'             => 'POST',
 					'callback'            => static function ( WP_REST_Request $request ): array {
-						ProxyAI_Content_Sync::set_sync_enabled( true === $request['enabled'] || '1' === $request['enabled'] );
+						ProxyAI_Content_Sync::set_sync_enabled( rest_sanitize_boolean( $request['enabled'] ) );
 						return array( 'enabled' => ProxyAI_Content_Sync::sync_enabled() );
 					},
 					'permission_callback' => array( ProxyAI_Connection::class, 'can_manage' ),
+					// Required and typed: a request without it is refused rather
+					// than read as "off".
+					'args'                => array(
+						'enabled' => array(
+							'type'              => 'boolean',
+							'required'          => true,
+							'validate_callback' => 'rest_validate_request_arg',
+							'sanitize_callback' => 'rest_sanitize_request_arg',
+						),
+					),
 				),
 			)
 		);
