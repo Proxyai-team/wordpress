@@ -234,6 +234,7 @@ while leaving the assistant running.
 * Dialogs centre over the admin content area instead of the full screen, numbered setup steps keep their numbers beside the text, and the ticket dialog's Category dropdown lines up with the fields beside it.
 * Support-ticket uploads travel through the site's own REST proxy like every other dashboard call.
 * Code housekeeping for the WordPress.org review: the whole plugin passes PHP_CodeSniffer's WordPress standard and Plugin Check clean.
+* Readme documents every external service the plugin uses — Stripe and PayPal terms and privacy links, what is sent and when, uploads — and states that the plugin ships no compiled or minified code, with the source published at https://github.com/Proxyai-team/wordpress.
 
 = 1.0.1 =
 * The dashboard is now fully native to wp-admin — setup, add-ons, agent inbox, ticket board, usage log, rates and settings all render locally on WordPress's own component library, with no embedded frame. Data flows through this site's REST API and is forwarded server-to-server; the browser holds no ProxyAI credential.
