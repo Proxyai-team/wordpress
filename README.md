@@ -15,4 +15,15 @@ To try it, zip this directory as `proxyai/` and upload it under
 **Plugins → Add New → Upload Plugin**, or copy it into `wp-content/plugins/proxyai/`.
 
 Docs: https://www.proxyai.app/help
-License: GPL-2.0-or-later
+
+## License
+
+The plugin code in this repository is licensed under the GNU General Public
+License, version 2 or later — see [LICENSE](LICENSE). Copyright © ProxyAI.
+
+"ProxyAI" and the ProxyAI logo are trademarks of ProxyAI and are not covered by
+the GPL; the license grants no right to use them. The hosted ProxyAI service
+this plugin talks to is a separate, proprietary service governed by its own
+[Terms of Service](https://www.proxyai.app/terms) and
+[Privacy Policy](https://www.proxyai.app/privacy) — the GPL covers this client
+code only, not the service.
